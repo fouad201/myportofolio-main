@@ -36,18 +36,18 @@ export const portfolioData = {
         ],
 
         certificates: [
-            // {
-            //     id: 1,
-            //     img: "/assets/cert.jpg"
-            // },
-            // {
-            //     id: 2,
-            //     img: "/assets/cert.jpg",
-            // },
-            // {
-            //     id: 3,
-            //     img: "/assets/cert.jpg",
-            // }
+            {
+                id: 1,
+                img: "/assets/cert.jpg"
+            },
+            {
+                id: 2,
+                img: "/assets/cert.jpg",
+            },
+            {
+                id: 3,
+                img: "/assets/cert.jpg",
+            }
         ],
 
         techStacks: [
