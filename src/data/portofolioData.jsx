@@ -86,6 +86,24 @@ export const portfolioData = {
                 icon: "bx bxl-git",
                 label: "Git",
                 color: "#F05032"
+            },
+            {
+                id: 7,
+                icon: "bx bxl-github",
+                label: "GitHub",
+                color: "#181717"
+            },
+            {
+                id: 8,
+                icon: "bx bxl-python", // Django represented via Python icon
+                label: "Django",
+                color: "#0C4B33"
+            },
+            {
+                id: 9,
+                icon: "bx bxs-data", // Generic database icon for MySQL
+                label: "MySQL",
+                color: "#4479A1"
             }
         ]
     }

@@ -78,20 +78,20 @@ const Navbar = () => {
     };
     return (
         <>
-            <nav className="bg-white fixed top-0 left-0 w-full z-50 p-1.5 overflow-hidden shadow-lg dark:bg-gray-800 transition-all duration-300" data-aos-duration="1000" data-aos="fade-down">
+            <nav className="bg-[var(--surface)] fixed top-0 left-0 w-full z-50 p-1.5 overflow-hidden shadow-lg transition-all duration-300" data-aos-duration="1000" data-aos="fade-down">
                 <div className="container">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between py-4">
                             <a href="#" className="flex items-center gap-2">
-                                <i className="bx bx-code-alt text-2xl text-gray-800 dark:text-white"></i>
-                                <h1 className="text-2xl font-semibold text-gray-800 dark:text-white">
+                                <i className="bx bx-code-alt text-2xl text-[var(--text)]"></i>
+                                <h1 className="text-2xl font-semibold text-[var(--text)]">
                                     My Portofolio
                                 </h1>
                             </a>
 
 
                             <button
-                                className="md:hidden text-gray-700 dark:text-white focus:outline-none"
+                                className="md:hidden text-[var(--text)] focus:outline-none"
                                 onClick={toggleMenu}
                                 aria-label="Toggle menu"
                             >
@@ -106,8 +106,8 @@ const Navbar = () => {
                                             href={`#${item.id}`}
                                             onClick={() => handleClick(item.id)}
                                             className={`flex items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 ${activeId === item.id
-                                                ? "bg-gray-800 shadow-2xl dark:bg-white dark:text-gray-800 text-white"
-                                                : "text-gray-800 dark:text-white hover:text-blue-600"
+                                                ? "bg-gradient-to-r from-[var(--grad-from)] to-[var(--grad-to)] text-white shadow-2xl"
+                                                : "text-[var(--text)] hover:text-[var(--primary)]"
                                                 }`}>
                                             <i className={`bx ${item.icon}`}></i>
                                             <span>{item.label}</span>
@@ -122,18 +122,18 @@ const Navbar = () => {
 
             {/* Off-Canvas Mobile Menu */}
             <div
-                className={`fixed top-0 right-0 h-full w-70 bg-white dark:bg-gray-800 shadow-xl transform transition-transform duration-300 ease-in-out z-50 md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+                className={`fixed top-0 right-0 h-full w-70 bg-[var(--surface)] shadow-xl transform transition-transform duration-300 ease-in-out z-50 md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
                     }`}
             >
                 <div className="flex flex-col h-full">
                     {/* Header */}
-                    <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                    <div className="flex items-center justify-between p-6 border-b border-soft">
                         <div className="flex items-center gap-2">
-                            <i className="bx bx-code-alt text-2xl text-gray-800 dark:text-white"></i>
-                            <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Navigation</h2>
+                            <i className="bx bx-code-alt text-2xl text-[var(--text)]"></i>
+                            <h2 className="text-lg font-semibold text-[var(--text)]">Navigation</h2>
                         </div>
                         <button
-                            className="text-gray-800 dark:text-white focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-lg transition-colors duration-200"
+                            className="text-[var(--text)] focus:outline-none hover:bg-white/5 p-2 rounded-lg transition-colors duration-200"
                             onClick={toggleMenu}
                             aria-label="Close menu"
                         >
@@ -157,8 +157,8 @@ const Navbar = () => {
                                         href={`#${item.id}`}
                                         onClick={() => handleClick(item.id)}
                                         className={`flex items-center gap-3 text-lg font-medium px-4 py-3 rounded-lg transition-all duration-200 ${activeId === item.id
-                                            ? "bg-gray-800 dark:bg-white dark:text-gray-800 text-white shadow-lg"
-                                            : "text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            ? "bg-gradient-to-r from-[var(--grad-from)] to-[var(--grad-to)] text-white shadow-lg"
+                                            : "text-[var(--text)] hover:text-[var(--primary)] hover:bg-white/5"
                                             }`}
                                     >
                                         <i className={`bx ${item.icon} text-xl`}></i>
@@ -172,7 +172,7 @@ const Navbar = () => {
                             <li>
                                 <button
                                     onClick={toggleDarkMode}
-                                    className="w-full flex items-center gap-3 text-lg font-medium px-4 py-3 rounded-lg transition-all duration-200 text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                    className="w-full flex items-center gap-3 text-lg font-medium px-4 py-3 rounded-lg transition-all duration-200 text-[var(--text)] hover:text-[var(--primary)] hover:bg-white/5"
                                     aria-label="Toggle dark mode"
                                 >
                                     <i className={`bx ${isDarkMode ? 'bx-sun' : 'bx-moon'} text-xl`}></i>
@@ -183,8 +183,8 @@ const Navbar = () => {
                     </div>
 
                     {/* Footer */}
-                    <div className="p-6 border-t border-gray-200 dark:border-gray-700">
-                        <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+                    <div className="p-6 border-t border-soft">
+                        <div className="text-center text-sm text-muted">
                             © {currentYear()} Hizkia Siahaan. All rights reserved
                         </div>
                     </div>

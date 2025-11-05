@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import homeData from "../data/homeData.jsx";
 import Tippy from "@tippyjs/react";
 import Swal from "sweetalert2";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const [currentText, setCurrentText] = useState("");
@@ -47,7 +48,7 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="min-h-screen bg-white dark:bg-gray-800 pt-20 overflow-hidden"
+      className="min-h-screen bg-app pt-20 overflow-hidden"
       data-aos-duration="1000"
       data-aos="fade-down"
     >
@@ -56,14 +57,14 @@ const Home = () => {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-800 dark:text-white"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text)]"
                 data-aos-dely="600"
                 data-aos="fade-down"
               >
                 {homeData.title}
               </h1>
               <h2
-                className="text-xl sm:text-2xl lg:text-3xl font-semibold text-gray-800 dark:text-white flex items-center"
+                className="text-xl sm:text-2xl lg:text-3xl font-semibold text-[var(--text)] flex items-center"
                 data-aos-delay="600"
                 data-aos="fade-right"
               >
@@ -81,7 +82,7 @@ const Home = () => {
             </div>
 
             <p
-              className="text-lg text-gray-800 dark:text-white leading-relaxed max-w-lg"
+              className="text-lg text-[var(--text)] leading-relaxed max-w-lg"
               data-aos-delay="600"
               data-aos="fade-left"
             >
@@ -93,7 +94,7 @@ const Home = () => {
               data-aos-delay="600"
               data-aos="fade-down"
             >
-              <span className="text-gray-800 dark:text-white font-medium">
+              <span className="text-[var(--text)] font-medium">
                 Follow me on:
               </span>
               <div className="flex space-x-3">
@@ -103,7 +104,7 @@ const Home = () => {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 bg-gray-800 text-white dark:bg-white rounded-full flex items-center shadow-2xl justify-center dark:text-gray-800 hover:text-white dark:hover:bg-white dark:hover:text-gray-800 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                      className="w-10 h-10 bg-[var(--surface-2)] text-white rounded-full flex items-center shadow-2xl justify-center hover:text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                       aria-label={`Visit ${social.platform}`}
                     >
                       <i className={`${social.icon} text-lg`}></i>
@@ -125,8 +126,8 @@ const Home = () => {
                       href={btn.href}
                       className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 ${
                         btn.type === "primary"
-                          ? "bg-gray-800 dark:bg-white text-white dark:text-gray-800 hover:bg-gray-800 dark:hover:bg-gray-100"
-                          : "border-2 border-gray-800 dark:border-white text-gray-800 dark:text-white hover:bg-gray-800 hover:text-white dark:hover:bg-white dark:hover:text-gray-800"
+                          ? "btn-gradient"
+                          : "border-2 border-[var(--primary)] text-[var(--text)] hover:bg-white/10"
                       }`}
                       target={btn.href.startsWith("http") ? "_blank" : "_self"}
                       rel="noopener noreferrer"
@@ -151,8 +152,8 @@ const Home = () => {
                       }
                       className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 ${
                         btn.type === "primary"
-                          ? "bg-gray-800 dark:bg-white text-white dark:text-gray-800 hover:bg-gray-800 dark:hover:bg-gray-100"
-                          : "border-2 border-gray-800 dark:border-white text-gray-800 dark:text-white hover:bg-gray-800 hover:text-white dark:hover:bg-white dark:hover:text-gray-800"
+                          ? "btn-gradient"
+                          : "border-2 border-[var(--primary)] text-[var(--text)] hover:bg-white/10"
                       }`}
                       aria-label={btn.label}
                     >
@@ -168,37 +169,7 @@ const Home = () => {
               ))}
             </div>
 
-            {/* Quick Stats Heading */}
-            <h4 className="flex items-center gap-2 text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              <i className="bx bx-bar-chart-alt text-base" />
-              Quick Stats:
-            </h4>
-
-            {/* Stats Grid */}
-            <div
-              className="grid grid-cols-2 sm:grid-cols-4 text-sm text-gray-800 dark:text-white gap-6 mt-2"
-              data-aos-delay="600"
-              data-aos="fade-up"
-            >
-              {homeData.stats.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-2 bg-gray-800 dark:bg-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg shadow-lg p-2 rounded-3xl"
-                >
-                  <div className="text-base text-white dark:text-gray-800">
-                    <i className={item.icon}></i>
-                  </div>
-                  <div>
-                    <p className="font-bold text-white dark:text-gray-800">
-                      {item.value}
-                    </p>
-                    <p className="text-xs text-white dark:text-gray-800">
-                      {item.label}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Quick Stats removed by request */}
           </div>
 
           <div
@@ -229,16 +200,28 @@ const Home = () => {
                   animation="shift-away"
                   delay={[0, 0]}
                 >
-                  <div
+                  <motion.div
                     className={`absolute ${
                       positions[index % positions.length]
-                    } w-12 h-12 sm:w-16 sm:h-16 bg-gray-800 text-white dark:bg-white dark:text-gray-800 dark:border  rounded-full drop-shadow-2xl shadow-lg dark:shadow-gray-800 flex items-center justify-center hover:scale-110 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 animate-float cursor-pointer`}
-                    style={{
-                      animationDelay: `${index * 0.5}s`,
+                    } w-12 h-12 sm:w-16 sm:h-16 bg-[var(--surface-2)] text-white rounded-full drop-shadow-2xl shadow-lg flex items-center justify-center cursor-pointer`}
+                    animate={{
+                      y: [0, -15, 0],
+                      rotate: [0, 5, -5, 0],
+                    }}
+                    transition={{
+                      duration: 3,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      delay: index * 0.5,
+                    }}
+                    whileHover={{
+                      scale: 1.15,
+                      rotate: 360,
+                      transition: { duration: 0.6 }
                     }}
                   >
                     <i className={`${tech.icon} text-xl sm:text-2xl`}></i>
-                  </div>
+                  </motion.div>
                 </Tippy>
               );
             })}
@@ -246,18 +229,6 @@ const Home = () => {
         </div>
 
         <style>{`
-          @keyframes float {
-            0%,
-            100% {
-              transform: translateY(0px);
-            }
-            50% {
-              transform: translateY(-10px);
-            }
-          }
-          .animate-float {
-            animation: float 3s ease-in-out infinite;
-          }
           .shadow-3xl {
             box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
           }

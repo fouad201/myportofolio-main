@@ -2,28 +2,55 @@ import { useState } from "react";
 import { portfolioData } from "../data/portofolioData.jsx";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Portfolio = () => {
   const [activeTab, setActiveTab] = useState("projects");
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
 
   return (
     <section
       id="portofolio"
-      className="min-h-screen pb-20 bg-white dark:bg-gray-800 pt-20"
+      className="min-h-screen pb-20 bg-app pt-20"
       data-aos-duration="1000"
       data-aos="fade-down"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title & Subtitle */}
         <div
-          className="text-center mb-12 text-gray-800"
+          className="text-center mb-12 text-[var(--text)]"
           data-aos-delay="600"
           data-aos="fade-down"
         >
-          <h2 className="text-5xl font-bold dark:text-white mb-2">
+          <h2 className="text-5xl font-bold mb-2 gradient-text">
             {portfolioData.sectionTitle.title}
           </h2>
-          <p className="text-lg dark:text-gray-400">
+          <p className="text-lg text-muted">
             {portfolioData.sectionTitle.subtitle}
           </p>
         </div>
@@ -36,11 +63,6 @@ const Portfolio = () => {
         >
           {[
             { value: "projects", label: "Projects", icon: "bx bx-briefcase" },
-            {
-              value: "certificates",
-              label: "Certificates",
-              icon: "bx bx-award",
-            },
             { value: "tech", label: "Tech Stack", icon: "bx bx-code-alt" },
           ].map((tab) => (
             <button
@@ -48,8 +70,8 @@ const Portfolio = () => {
               onClick={() => setActiveTab(tab.value)}
               className={`flex items-center gap-2 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all ${
                 activeTab === tab.value
-                  ? "bg-gray-800 text-white dark:bg-white dark:text-gray-800"
-                  : "bg-white text-gray-800 dark:bg-gray-800 dark:text-white border border-white"
+                  ? "btn-gradient text-white"
+                  : "bg-[var(--surface)] text-[var(--text)] border border-soft hover:bg-white/5"
               }`}
             >
               <i className={tab.icon}></i>
@@ -62,35 +84,45 @@ const Portfolio = () => {
         <div>
           {/* Projects Tab */}
           {activeTab === "projects" && (
-            <div
+            <motion.div
+              ref={ref}
+              variants={containerVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-              data-aos-delay="600"
-              data-aos="fade-down"
             >
               {portfolioData.tabs.projects.map((project) => (
-                <div
+                <motion.div
                   key={project.id}
-                  className="bg-white dark:bg-gray-800 border border-white rounded-lg p-6 shadow-lg hover:-translate-y-1 transition-transform"
+                  variants={itemVariants}
+                  whileHover={{ 
+                    scale: 1.03,
+                    rotateY: 5,
+                    rotateX: 5,
+                    transition: { duration: 0.3 }
+                  }}
+                  className="bg-[var(--surface)] border border-soft rounded-lg p-6 shadow-lg"
+                  style={{ transformStyle: "preserve-3d" }}
                 >
                   <img
                     src={project.img}
                     alt={project.title}
                     className="w-full h-48 object-cover rounded-lg mb-4"
                   />
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                  <h3 className="text-xl font-semibold text-[var(--text)] mb-2">
                     {project.title}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  <p className="text-sm text-muted mb-2">
                     {project.subtitle}
                   </p>
-                  <p className="text-sm text-gray-800 dark:text-white mb-4">
+                  <p className="text-sm text-[var(--text)] mb-4">
                     {project.desc}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 bg-gray-200 dark:bg-gray-700 text-xs rounded-full text-gray-800 dark:text-white"
+                        className="px-2 py-1 bg-white/10 text-xs rounded-full text-[var(--text)]"
                       >
                         {tag}
                       </span>
@@ -101,7 +133,7 @@ const Portfolio = () => {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex justify-center w-full items-center gap-2 px-4 py-2 bg-gray-800 text-white dark:bg-white dark:text-gray-800 rounded-lg font-medium transition-all hover:-translate-y-1"
+                      className="inline-flex justify-center w-full items-center gap-2 px-4 py-2 btn-gradient rounded-lg font-medium transition-all hover:-translate-y-1"
                     >
                       <span className="flex items-center gap-1">
                         <span>Demo</span>
@@ -109,55 +141,42 @@ const Portfolio = () => {
                       </span>
                     </a>
                   </Tippy>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
-          {/* Certificates Tab */}
-          {activeTab === "certificates" && (
-            <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-              data-aos-delay="600"
-              data-aos="fade-down"
-            >
-              {portfolioData.tabs.certificates.map((certificate) => (
-                <div
-                  key={certificate.id}
-                  className="bg-white dark:bg-gray-800 border border-white rounded-lg shadow-lg hover:-translate-y-1 transition-transform overflow-hidden"
-                >
-                  <img
-                    src={certificate.img}
-                    alt={certificate.title}
-                    className="w-full h-72 object-cover rounded-lg"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          {/* Certificates Tab removed by request */}
 
           {/* Tech Stack Tab */}
           {activeTab === "tech" && (
-            <div
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-              data-aos-delay="600"
-              data-aos="fade-down"
             >
               {portfolioData.tabs.techStacks.map((tech) => (
-                <div
+                <motion.div
                   key={tech.id}
-                  className="bg-white dark:bg-gray-800 border border-white rounded-lg p-6 shadow-lg hover:-translate-y-1 transition-transform flex flex-col items-center justify-center gap-4"
+                  variants={itemVariants}
+                  whileHover={{ 
+                    scale: 1.1,
+                    rotate: [0, -5, 5, 0],
+                    transition: { duration: 0.4 }
+                  }}
+                  className="bg-[var(--surface)] border border-soft rounded-lg p-6 shadow-lg flex flex-col items-center justify-center gap-4"
                 >
                   <i
                     className={`${tech.icon}  text-6xl`}
                     style={{ color: tech.color }}
                   ></i>
-                  <span className="text-lg font-medium text-gray-800 dark:text-white">
+                  <span className="text-lg font-medium text-[var(--text)]">
                     {tech.label}
                   </span>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
