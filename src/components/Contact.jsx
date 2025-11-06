@@ -1,12 +1,14 @@
 import { useState } from "react";
 import contactData from "../data/contactData.jsx";
-// Removed form and support button; no tooltip or alerts needed
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import aboutData from "../data/aboutData.jsx";
+import confetti from "canvas-confetti";
+import { useSound } from "./SoundToggle";
 
 const Contact = () => {
   const [activeTab, setActiveTab] = useState("contact");
+  const { playSound } = useSound();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
@@ -47,7 +49,27 @@ const Contact = () => {
       await navigator.clipboard.writeText(emailAddress);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
+      
+      // Play success sound and trigger confetti
+      playSound('success');
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.6 },
+        colors: ['#6366f1', '#a855f7', '#61DAFB']
+      });
     } catch (_) {}
+  };
+
+  const handleContactClick = () => {
+    // Play click sound and trigger confetti
+    playSound('click');
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#6366f1', '#a855f7', '#61DAFB', '#F59E0B']
+    });
   };
 
   return (
@@ -88,6 +110,7 @@ const Contact = () => {
               <div className="flex flex-wrap items-center gap-3 justify-center">
                 <a
                   href={emailAddress ? `mailto:${emailAddress}?subject=Hello%20Fouad&body=Hi%20Fouad,` : "#"}
+                  onClick={handleContactClick}
                   className="px-5 py-3 rounded-lg btn-gradient text-white font-medium shadow-lg hover:-translate-y-0.5 transition"
                 >
                   <i className="bx bx-envelope" />
@@ -97,6 +120,7 @@ const Contact = () => {
                   <a
                     href={`${whatsappLink}?text=Hi%20Fouad!%20I%20found%20your%20portfolio%20and%20would%20love%20to%20connect.`}
                     target="_blank" rel="noopener noreferrer"
+                    onClick={handleContactClick}
                     className="px-5 py-3 rounded-lg bg-[var(--surface)] text-[var(--text)] border border-soft font-medium shadow hover:-translate-y-0.5 transition"
                   >
                     <i className="bx bxl-whatsapp" />

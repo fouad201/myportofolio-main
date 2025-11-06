@@ -2,13 +2,21 @@ import { useState, useEffect } from "react";
 import homeData from "../data/homeData.jsx";
 import Tippy from "@tippyjs/react";
 import Swal from "sweetalert2";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useSound } from "./SoundToggle";
 
 const Home = () => {
   const [currentText, setCurrentText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
+  const { playSound } = useSound();
+
+  // Parallax effect
+  const { scrollY } = useScroll();
+  const yText = useTransform(scrollY, [0, 500], [0, 150]);
+  const yImage = useTransform(scrollY, [0, 500], [0, -100]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   useEffect(() => {
     const titles = homeData.typingTexts;
@@ -54,7 +62,10 @@ const Home = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-5rem)] py-12">
-          <div className="space-y-8">
+          <motion.div 
+            className="space-y-8"
+            style={{ y: yText, opacity }}
+          >
             <div className="space-y-4">
               <h1
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[var(--text)]"
@@ -121,9 +132,10 @@ const Home = () => {
             >
               {homeData.buttons.map((btn, index) => (
                 <Tippy content={btn.label} key={index} placement="top">
-                  {btn.href && btn.href !== "#" ? (
+                  {btn.href && btn.href !== "#" && btn.href !== "" ? (
                     <a
                       href={btn.href}
+                      onClick={() => playSound('click')}
                       className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 ${
                         btn.type === "primary"
                           ? "btn-gradient"
@@ -131,6 +143,7 @@ const Home = () => {
                       }`}
                       target={btn.href.startsWith("http") ? "_blank" : "_self"}
                       rel="noopener noreferrer"
+                      download={btn.href.endsWith(".pdf") ? true : undefined}
                     >
                       <i
                         className={`bx ${
@@ -141,15 +154,16 @@ const Home = () => {
                     </a>
                   ) : (
                     <button
-                      onClick={() =>
+                      onClick={() => {
+                        playSound('click');
                         Swal.fire({
                           title: "Not Available Yet 😅",
                           text: "This feature or file is not ready yet. Please check back later!",
                           icon: "info",
                           confirmButtonColor: "#1F2937",
                           confirmButtonText: "Alright",
-                        })
-                      }
+                        });
+                      }}
                       className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 ${
                         btn.type === "primary"
                           ? "btn-gradient"
@@ -170,17 +184,18 @@ const Home = () => {
             </div>
 
             {/* Quick Stats removed by request */}
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
             className="relative flex justify-center items-center"
             data-aos-delay="600"
             data-aos="fade-up"
+            style={{ y: yImage, opacity }}
           >
             <div className="relative z-10">
               <img
                 src={homeData.img}
-                alt="Hizkia Siahaan Profile"
+                alt="Fouad Mohamed Profile"
                 className="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-cover rounded-full shadow-2xl dark:shadow-gray-800 border-8 border-white dark:border-gray-800 hover:shadow-3xl hover:-translate-y-2 transition-all duration-300"
               />
             </div>
@@ -225,7 +240,7 @@ const Home = () => {
                 </Tippy>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         <style>{`

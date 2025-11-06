@@ -5,16 +5,16 @@ const aboutData = {
 
     biodata: [
         { label: "Name", value: "Fouad Mohamed", icon: "bx bx-id-card" },
-        { label: "Date of Birth", value: "January,20-1998", icon: "bx bx-calendar" },
+        { label: "Date of Birth", value: "January 20, 1998", icon: "bx bx-calendar" },
         { label: "Place of Birth", value: "Egypt-Cairo", icon: "bx bx-map" },
         { label: "Email", value: "fouadmekawy@gmail.com", icon: "bx bx-envelope" },
-        { label: "Phone", value: "01113882381", icon: "bx bx-phone" },
+        { label: "Phone", value: "+20 111 388 2381", icon: "bx bx-phone" },
        
     ],
 
     resume: {
         label: "Download My Resume",
-        href: null,
+        href: "/assets/Fouad_Mohamed_CV.pdf",
         icon: "bx bx-download",
     },
 

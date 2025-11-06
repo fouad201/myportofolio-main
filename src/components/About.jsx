@@ -3,9 +3,11 @@ import Tippy from '@tippyjs/react';
 import Swal from 'sweetalert2';
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useSound } from "./SoundToggle";
 
 
 const About = () => {
+    const { playSound } = useSound();
     const [ref, inView] = useInView({
         triggerOnce: true,
         threshold: 0.1
@@ -135,24 +137,40 @@ const About = () => {
 
 
                         <Tippy content="Download My Resume">
-                            <button
-                                onClick={() => {
-                                    Swal.fire({
-                                        title: "Not Available Yet 😅",
-                                        text: "My resume is still in progress. Please check back later!",
-                                        icon: "info",
-                                        confirmButtonColor: "#1F2937",
-                                        confirmButtonText: "Alright",
-                                    });
-                                }}
-                                className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 btn-gradient`}
-                                aria-label="Download Resume"
-                                data-aos-delay="600"
-                                data-aos="fade-down"
-                            >
-                                <i className={`${aboutData.resume.icon} text-lg mr-2`} aria-hidden="true"></i>
-                                {aboutData.resume.label}
-                            </button>
+                            {aboutData.resume.href ? (
+                                <a
+                                    href={aboutData.resume.href}
+                                    download
+                                    onClick={() => playSound('click')}
+                                    className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 btn-gradient`}
+                                    aria-label="Download Resume"
+                                    data-aos-delay="600"
+                                    data-aos="fade-down"
+                                >
+                                    <i className={`${aboutData.resume.icon} text-lg mr-2`} aria-hidden="true"></i>
+                                    {aboutData.resume.label}
+                                </a>
+                            ) : (
+                                <button
+                                    onClick={() => {
+                                        playSound('click');
+                                        Swal.fire({
+                                            title: "Not Available Yet 😅",
+                                            text: "My resume is still in progress. Please check back later!",
+                                            icon: "info",
+                                            confirmButtonColor: "#1F2937",
+                                            confirmButtonText: "Alright",
+                                        });
+                                    }}
+                                    className={`inline-flex items-center justify-center px-6 py-3 font-semibold rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 btn-gradient`}
+                                    aria-label="Download Resume"
+                                    data-aos-delay="600"
+                                    data-aos="fade-down"
+                                >
+                                    <i className={`${aboutData.resume.icon} text-lg mr-2`} aria-hidden="true"></i>
+                                    {aboutData.resume.label}
+                                </button>
+                            )}
                         </Tippy>
                     </motion.div>
                 </motion.div>

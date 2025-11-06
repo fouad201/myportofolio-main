@@ -17,7 +17,7 @@ export const portfolioData = {
             },
             {
                 id: 2,
-                img: "/assets/project.png",
+                img: "/assets/project2.png",
                 title: "Chatbot Assistant",
                 subtitle: "A chatbot that evolves with every conversation.",
                 desc: "This chatbot is a React-based assistant that learns from user input and stores knowledge using a simple Express + JSON backend. It’s designed to grow smarter over time and simulate natural, human-like dialogue. Ideal for basic AI training or personalized assistants.",

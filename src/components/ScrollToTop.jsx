@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useSound } from "./SoundToggle";
 
 const ScrollToTop = () => {
     const [isVisible, setIsVisible] = useState(false);
+    const { playSound } = useSound();
 
     useEffect(() => {
         const toggleVisibility = () => {
@@ -13,6 +15,7 @@ const ScrollToTop = () => {
     }, []);
 
     const scrollToTop = () => {
+        playSound('click');
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 

@@ -4,12 +4,33 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
+import { useSwipeable } from "react-swipeable";
+import { useSound } from "./SoundToggle";
 
 const Portfolio = () => {
   const [activeTab, setActiveTab] = useState("projects");
+  const { playSound } = useSound();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1
+  });
+
+  // Touch gesture handlers
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (activeTab === "projects") {
+        setActiveTab("tech");
+        playSound('click');
+      }
+    },
+    onSwipedRight: () => {
+      if (activeTab === "tech") {
+        setActiveTab("projects");
+        playSound('click');
+      }
+    },
+    preventScrollOnSwipe: true,
+    trackMouse: false
   });
 
   const containerVariants = {
@@ -35,10 +56,11 @@ const Portfolio = () => {
 
   return (
     <section
-      id="portofolio"
+      id="portfolio"
       className="min-h-screen pb-20 bg-app pt-20"
       data-aos-duration="1000"
       data-aos="fade-down"
+      {...handlers}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Title & Subtitle */}
@@ -67,7 +89,10 @@ const Portfolio = () => {
           ].map((tab) => (
             <button
               key={tab.value}
-              onClick={() => setActiveTab(tab.value)}
+              onClick={() => {
+                setActiveTab(tab.value);
+                playSound('click');
+              }}
               className={`flex items-center gap-2 px-5 py-3 rounded-lg shadow-lg text-sm font-medium transition-all ${
                 activeTab === tab.value
                   ? "btn-gradient text-white"
@@ -96,18 +121,27 @@ const Portfolio = () => {
                   key={project.id}
                   variants={itemVariants}
                   whileHover={{ 
-                    scale: 1.03,
-                    rotateY: 5,
-                    rotateX: 5,
-                    transition: { duration: 0.3 }
+                    scale: 1.05,
+                    rotateY: 8,
+                    rotateX: 8,
+                    z: 50,
+                    transition: { duration: 0.4, ease: "easeOut" }
                   }}
-                  className="bg-[var(--surface)] border border-soft rounded-lg p-6 shadow-lg"
-                  style={{ transformStyle: "preserve-3d" }}
+                  className="bg-[var(--surface)] border border-soft rounded-lg p-6 shadow-lg hover:shadow-2xl relative overflow-hidden"
+                  style={{ 
+                    transformStyle: "preserve-3d",
+                    perspective: "1000px"
+                  }}
                 >
-                  <img
+                  {/* Gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[var(--grad-from)]/0 to-[var(--grad-to)]/0 hover:from-[var(--grad-from)]/10 hover:to-[var(--grad-to)]/10 transition-all duration-300 rounded-lg pointer-events-none" />
+                  
+                  <motion.img
                     src={project.img}
                     alt={project.title}
                     className="w-full h-48 object-cover rounded-lg mb-4"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
                   />
                   <h3 className="text-xl font-semibold text-[var(--text)] mb-2">
                     {project.title}
@@ -129,17 +163,23 @@ const Portfolio = () => {
                     ))}
                   </div>
                   <Tippy content="View Demo" placement="top">
-                    <a
+                    <motion.a
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex justify-center w-full items-center gap-2 px-4 py-2 btn-gradient rounded-lg font-medium transition-all hover:-translate-y-1"
+                      className="inline-flex justify-center w-full items-center gap-2 px-4 py-2 btn-gradient rounded-lg font-medium transition-all relative z-10"
+                      whileHover={{ 
+                        scale: 1.05,
+                        y: -2,
+                        boxShadow: "0 10px 30px rgba(99, 102, 241, 0.3)"
+                      }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <span className="flex items-center gap-1">
                         <span>Demo</span>
                         <i className="bx bx-link-external"></i>
                       </span>
-                    </a>
+                    </motion.a>
                   </Tippy>
                 </motion.div>
               ))}
@@ -185,3 +225,4 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+

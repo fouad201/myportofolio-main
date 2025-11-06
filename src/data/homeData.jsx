@@ -17,7 +17,7 @@ const homeData = {
     },
     {
       label: "Download My CV",
-      href: "#",
+      href: "/assets/Fouad_Mohamed_CV.pdf",
       type: "secondary",
     },
   ],

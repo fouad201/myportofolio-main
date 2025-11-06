@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import navbarData from "../data/navbarData.jsx";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSound } from "./SoundToggle";
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeId, setActiveId] = useState(null);
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const { playSound } = useSound();
 
   
     const currentYear = () => new Date().getFullYear();
@@ -64,17 +67,19 @@ const Navbar = () => {
         const newMode = !isDarkMode;
         setIsDarkMode(newMode);
         document.documentElement.classList.toggle("dark");
-
         localStorage.setItem("theme", newMode ? "dark" : "light");
+        playSound('click');
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+        playSound('click');
     };
 
     const handleClick = (id) => {
         setActiveId(id);
         setIsMenuOpen(false);
+        playSound('click');
     };
     return (
         <>
@@ -121,9 +126,14 @@ const Navbar = () => {
             </nav>
 
             {/* Off-Canvas Mobile Menu */}
-            <div
-                className={`fixed top-0 right-0 h-full w-70 bg-[var(--surface)] shadow-xl transform transition-transform duration-300 ease-in-out z-50 md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"
-                    }`}
+            <AnimatePresence>
+            {isMenuOpen && (
+            <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="fixed top-0 right-0 h-full w-70 bg-[var(--surface)] shadow-xl z-50 md:hidden"
             >
                 <div className="flex flex-col h-full">
                     {/* Header */}
@@ -145,12 +155,15 @@ const Navbar = () => {
                     <div className="flex-1 overflow-y-auto py-6">
                         <ul className="flex flex-col gap-2 px-6">
                             {navbarData.map((item, index) => (
-                                <li
+                                <motion.li
                                     key={item.id}
-                                    className={`transform transition-all duration-300 ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-                                        }`}
-                                    style={{
-                                        transitionDelay: `${isMenuOpen ? index * 0.1 : 0}s`
+                                    initial={{ x: 50, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ 
+                                        delay: index * 0.1,
+                                        type: "spring",
+                                        stiffness: 300,
+                                        damping: 24
                                     }}
                                 >
                                     <a
@@ -163,33 +176,31 @@ const Navbar = () => {
                                     >
                                         <i className={`bx ${item.icon} text-xl`}></i>
                                         <span>{item.label}</span>
-                                        <i className="bx bx-chevron-right ml-auto text-xl"></i> {/*langsung ke kanan */}
+                                        <motion.i 
+                                            className="bx bx-chevron-right ml-auto text-xl"
+                                            animate={{ x: [0, 5, 0] }}
+                                            transition={{ 
+                                                repeat: Infinity,
+                                                duration: 1.5,
+                                                ease: "easeInOut"
+                                            }}
+                                        />
                                     </a>
-                                </li>
+                                </motion.li>
                             ))}
-
-                            {/* Mobile Dark Mode Toggle */}
-                            <li>
-                                <button
-                                    onClick={toggleDarkMode}
-                                    className="w-full flex items-center gap-3 text-lg font-medium px-4 py-3 rounded-lg transition-all duration-200 text-[var(--text)] hover:text-[var(--primary)] hover:bg-white/5"
-                                    aria-label="Toggle dark mode"
-                                >
-                                    <i className={`bx ${isDarkMode ? 'bx-sun' : 'bx-moon'} text-xl`}></i>
-                                    <span>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
-                                </button>
-                            </li>
                         </ul>
                     </div>
 
                     {/* Footer */}
                     <div className="p-6 border-t border-soft">
                         <div className="text-center text-sm text-muted">
-                            © {currentYear()} Hizkia Siahaan. All rights reserved
+                            © {currentYear()} Fouad Mohamed. All rights reserved
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
+            )}
+            </AnimatePresence>
         </>
     );
 };
