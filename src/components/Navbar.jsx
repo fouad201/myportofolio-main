@@ -90,7 +90,7 @@ const Navbar = () => {
                             <a href="#" className="flex items-center gap-2">
                                 <i className="bx bx-code-alt text-2xl text-[var(--text)]"></i>
                                 <h1 className="text-2xl font-semibold text-[var(--text)]">
-                                    My Portofolio
+                                    My Portfolio
                                 </h1>
                             </a>
 
