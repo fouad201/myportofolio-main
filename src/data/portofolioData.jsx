@@ -8,21 +8,22 @@ export const portfolioData = {
         projects: [
             {
                 id: 1,
-                img: "/assets/project1.png",
-                title: "e-commerce platform",
-                subtitle: "A Modern E-Commerce Website with Clean Design and Smooth User Experience.",
-                desc: "This project is a modern e-commerce website that showcases products in a clean and user-friendly interface. It features product categories, search functionality, and options to view product details or add items directly to the cart. The minimalist design ensures smooth navigation while providing a professional online shopping experience.",
-                demo: "https://ecommerce-rust-five-86.vercel.app/",
-                tags: ["React", "Css-modules", "next.JS", "JavaScript"]
+                img: "/assets/project4.png",
+                title: "Full-Stack E-commerce website",
+                subtitle: "User-friendly e-commerce platform with Django and React.",
+                desc: "A comprehensive full-stack e-commerce website developed using Django for the backend and React for the frontend. This platform offers seamless product browsing, secure user authentication, and a smooth checkout process, providing an engaging shopping experience.",
+                demo: "https://github.com/fouad201/ShopHup",
+                tags: ["Vite", "React", "Tailwind CSS", "JavaScript", "Django", "Python"]
             },
+            
             {
                 id: 2,
                 img: "/assets/project2.png",
-                title: "Chatbot Assistant",
-                subtitle: "A chatbot that evolves with every conversation.",
-                desc: "This chatbot is a React-based assistant that learns from user input and stores knowledge using a simple Express + JSON backend. It’s designed to grow smarter over time and simulate natural, human-like dialogue. Ideal for basic AI training or personalized assistants.",
-                demo: "#",
-                tags: ["React", "Express", "Node.js", "JSON"]
+                title: "Orial ", 
+                subtitle: "Integrated Software & Web Development ",
+                desc: "Orial is a high-performance software solutions company that builds scalable web apps, mobile apps, and custom business systems. The platform highlights Orial’s focus on clean architecture, reliable APIs, and seamless user experiences—delivering modern, production-ready digital solutions for businesses.",
+                demo: "https://orial.co/#/",
+                tags: ["React", "CSS3", "Vite", "JavaScript"]
             },
             {
                 id: 3,
@@ -32,7 +33,16 @@ export const portfolioData = {
                 desc: "A sleek and responsive personal portfolio built with Vite and Tailwind CSS. This site features categorized project sections, certificates, and a dynamic tech stack. Optimized for both desktop and mobile experiences, it reflects professional branding with clean code.",
                 demo: "#",
                 tags: ["Vite", "React", "Tailwind CSS", "JavaScript"]
-            }
+            },
+            {
+                id: 4,
+                img: "/assets/project1.png",
+                title: "e-commerce platform",
+                subtitle: "A Modern E-Commerce Website with Clean Design and Smooth User Experience.",
+                desc: "This project is a modern e-commerce website that showcases products in a clean and user-friendly interface. It features product categories, search functionality, and options to view product details or add items directly to the cart. The minimalist design ensures smooth navigation while providing a professional online shopping experience.",
+                demo: "https://ecommerce-rust-five-86.vercel.app/",
+                tags: ["React", "CSS-Modules", "NextJS", "JavaScript"]
+            },
         ],
 
         certificates: [

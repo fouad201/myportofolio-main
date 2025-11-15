@@ -12,7 +12,7 @@ const homeData = {
   buttons: [
     {
       label: "Explore My Project",
-      href: "https://github.com/fouad201",
+      href: "file:///C:/Users/fofas/AppData/Local/Microsoft/Windows/INetCache/IE/068NJ0O9/Fouad_Mohamed_CV[1].pdf",
       type: "primary",
     },
     {
